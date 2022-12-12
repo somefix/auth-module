@@ -135,7 +135,9 @@ export default Vue.extend({
       { key: 'auth0', name: 'Auth0', color: '#ec5425' },
       { key: 'google', name: 'Google', color: '#4284f4' },
       { key: 'facebook', name: 'Facebook', color: '#3c65c4' },
-      { key: 'github', name: 'GitHub', color: '#202326' }
+      { key: 'github', name: 'GitHub', color: '#202326' },
+      { key: 'twitch', name: 'Twitch', color: '#9147ff' },
+      { key: 'discord', name: 'Discord', color: '#404eed' }
     ],
     redirect() {
       return (

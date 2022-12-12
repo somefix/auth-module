@@ -63,6 +63,10 @@ export default <NuxtConfig>{
         clientId: process.env.DISCORD_CLIENT_ID,
         clientSecret: process.env.DISCORD_CLIENT_SECRET
       },
+      twitch: {
+        clientId: process.env.TWITCH_CLIENT_ID,
+        clientSecret: process.env.TWITCH_CLIENT_SECRET
+      },
       facebook: {
         endpoints: {
           userInfo:

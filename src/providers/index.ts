@@ -1,5 +1,6 @@
 export * from './auth0'
 export * from './discord'
+export * from './twitch'
 export * from './facebook'
 export * from './github'
 export * from './google'
