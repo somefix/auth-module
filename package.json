@@ -1,5 +1,5 @@
 {
-  "name": "nuxtjs-auth",
+  "name": "@somefix/nuxtjs-auth",
   "version": "5.0.0-dev",
   "description": "Authentication module for Nuxt.js with some fix",
   "repository": "somefix/auth-module",
