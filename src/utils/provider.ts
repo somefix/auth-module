@@ -24,6 +24,7 @@ export function addAuthorize<
   strategy: SOptions,
   useForms: boolean = false
 ): void {
+  console.log('[addAuthorize]', strategy)
   // Get clientSecret, clientId, endpoints.token and audience
   const clientSecret = strategy.clientSecret
   const clientID = strategy.clientId

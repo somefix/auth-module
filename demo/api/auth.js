@@ -28,6 +28,7 @@ const refreshTokens = {}
 
 // [POST] /login
 app.post('/login', (req, res) => {
+  console.log('[app.post]')
   const { username, password } = req.body
   const valid = username.length && password === '123'
   const expiresIn = 15

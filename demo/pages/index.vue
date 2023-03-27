@@ -10,7 +10,7 @@
             Logout
           </b-btn>
         </template>
-        <b-btn v-else variant="success" to="/login"> Login </b-btn>
+        <b-btn variant="success" to="/login"> Login </b-btn>
       </div>
     </b-jumbotron>
 

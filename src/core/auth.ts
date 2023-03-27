@@ -76,6 +76,16 @@ export class Auth {
     return this.strategies[this.$state.strategy]
   }
 
+  getStrategyBy(name: string, throwException = true): Scheme {
+    const strategy = this.strategies?.[name]
+
+    if (throwException && !strategy) {
+      throw new Error(`Strategy not supported: ${name}`)
+    }
+
+    return strategy
+  }
+
   get user(): Record<string, unknown> | null {
     return this.$state.user
   }
@@ -188,6 +198,20 @@ export class Auth {
 
   loginWith(name: string, ...args: unknown[]): Promise<HTTPResponse | void> {
     return this.setStrategy(name).then(() => this.login(...args))
+  }
+
+  loginBy(name: string, ...args: unknown[]): Promise<HTTPResponse | void> {
+    if (!this.loggedIn) {
+      return Promise.reject(new Error('You need to log in'))
+    }
+
+    return this.wrapLogin(this.getStrategyBy(name).login(...args)).catch(
+      (error) => {
+        this.callOnError(error, { method: 'loginBy' })
+
+        return Promise.reject(error)
+      }
+    )
   }
 
   login(...args: unknown[]): Promise<HTTPResponse | void> {

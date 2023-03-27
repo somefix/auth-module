@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2 class="text-center">Login</h2>
+    <h2 v-if="!$auth.$state.loggedIn" class="text-center">Login</h2>
+    <h2 v-else class="text-center">Connect Social without change state</h2>
     <hr />
     <b-alert v-if="errorMessage" show variant="danger">
       {{ errorMessage }}
@@ -9,7 +10,7 @@
       You have to login before accessing to
       <strong>{{ $auth.$state.redirect }}</strong>
     </b-alert>
-    <b-row align-h="center" class="pt-4">
+    <b-row v-if="!$auth.$state.loggedIn" align-h="center" class="pt-4">
       <b-col md="4">
         <b-card bg-variant="light">
           <busy-overlay />
@@ -115,6 +116,42 @@
         </b-card>
       </b-col>
     </b-row>
+    <b-row align-h="center" class="pt-4">
+      <b-col
+        v-if="!$auth.$state.loggedIn"
+        md="12"
+        class="pb-4"
+        align-self="center"
+      >
+        <div class="text-center">
+          <b-badge pill> AND </b-badge>
+        </div>
+      </b-col>
+      <b-col md="4" class="text-center">
+        <b-card title="Connect Social after login" bg-variant="light">
+          <div v-for="s in strategies" :key="s.key" class="mb-2">
+            <b-btn
+              block
+              :style="{ background: s.color }"
+              class="login-button"
+              @click="loginBy(s.key)"
+            >
+              Connect {{ s.name }}
+            </b-btn>
+          </div>
+          <div class="mb-2">
+            <b-btn
+              block
+              :style="{ background: 'purple' }"
+              class="login-button"
+              @click="loginBy('oauth2mock')"
+            >
+              Login with oauth2
+            </b-btn>
+          </div>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -123,6 +160,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   middleware: ['auth'],
+  auth: false,
   data() {
     return {
       username: '',
@@ -183,6 +221,16 @@ export default Vue.extend({
           const responseData = err.response?.data
           this.error = responseData?.error ?? responseData
         })
+    },
+
+    loginBy(name) {
+      this.error = null
+
+      return this.$auth.loginBy(name).catch((err) => {
+        const responseData = err.response?.data ?? err?.toString()
+        this.error = responseData?.error ?? responseData
+        window.scrollTo(0, 0)
+      })
     },
 
     localRefresh() {
